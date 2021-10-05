@@ -14,12 +14,14 @@ import {
 } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react';
 import db from '../firebase';
+import { useStateValue } from '../StateProvider';
 import "../styles/Sidebar.css";
 import SidebarOption from './SidebarOption';
 
 function Sidebar() {
 
     const [channels, setChannels] = useState([]);
+    const [{ user }] = useStateValue();
 
     useEffect(() => {
         // Run this code when the sidebar component loads only once since the we are sending empty array
@@ -40,7 +42,7 @@ function Sidebar() {
 
 
                     <h2>Clever Programmer</h2>
-                    <h3><FiberManualRecord /> Krishna Vithal</h3>
+                    <h3><FiberManualRecord /> {user?.displayName}</h3>
                 </div>
                 <Create />
             </div>
@@ -55,7 +57,7 @@ function Sidebar() {
             <hr />
             <SidebarOption Icon={ExpandMore} title="Channels" />
             <hr />
-            <SidebarOption Icon={Add} title="Add Channel" addChannelOptions={""} />
+            <SidebarOption Icon={Add} title="Add Channel" addChannelOption />
             {/* connect to db and list all channels */}
             {/* <SidebarOption ... /> */}
             {channels.map(ch => (
